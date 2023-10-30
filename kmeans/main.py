@@ -11,7 +11,7 @@ Mdados = []
 norm1 = [
     6, 7, 8, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 33, 35,
     36, 37, 48, 49, 50, 67, 72, 73, 74, 75, 76, 85, 86, 87, 88, 89, 90, 91, 95,
-    103
+    103,104,105,106,107,108,109,110,111,112,113,114
 ]
 norm2 = [
     9, 24, 25, 26, 27, 28, 29, 30, 31, 32, 34, 38, 39, 40, 41, 42, 43, 44, 45,
@@ -145,6 +145,7 @@ for linha in Mdados:
     mult.append(' ' + linha[i])
     i = i + 1
   holder.append(mult)  #fofocas e calunias
+  '''
   mult = []
   mult.append(int(linha[i]))
   i += 1
@@ -173,7 +174,7 @@ for linha in Mdados:
     mult.append(' ' + linha[i])
     i = i + 1
   holder.append(mult)  #assédio
-  mult = []
+  mult = []'''
   Dnorm.append(holder)
 
 from sklearn.cluster import KMeans

@@ -136,8 +136,9 @@ for linha in Mdados:
       int(linha[100]))  #justiça organizacional
   mult.append(linha[101])
   i = 102
-  while ((linha[i]) != '0' and linha[i] != '1' and linha[i] != '2'
+  while (linha[i] != '0' and linha[i] != '1' and linha[i] != '2'
          and linha != '3' and linha[i] != '4'):
+    print(linha[i])
     mult.append(' ' + linha[i])
     i = i + 1
   holder.append(mult)  #fofocas e calunias

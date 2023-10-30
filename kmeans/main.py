@@ -136,6 +136,9 @@ for linha in Mdados:
       int(linha[100]))  #justiça organizacional
   mult.append(linha[101])
   i = 102
+    #Aqui deveria captar a 1ª resposta em forma de numero no mult.append da 137, então entrar no while para poder 
+    # ler se foram colegas, professores, ambos ou nenhum ( dado por '-'), mas o 'não' das outras questões não está 
+    # sendo substituído por número (feito no for da 21)
   while (linha[i] != '0' and linha[i] != '1' and linha[i] != '2'
          and linha != '3' and linha[i] != '4'):
     print(linha[i])

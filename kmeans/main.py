@@ -17,7 +17,7 @@ norm1 = [
 norm2 = [
     9, 24, 25, 26, 27, 28, 29, 30, 31, 32, 34, 38, 39, 40, 41, 42, 43, 44, 45,
     46, 47, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 68,
-    69, 70, 71, 77, 78, 79, 80, 81, 82, 83, 84, 92, 93, 94, 96, 97, 98, 99
+    69, 70, 71, 77, 78, 79, 80, 81, 82, 83, 84, 92, 93, 94, 96, 97, 98, 99,142,143,144,145,146,147
 ]
 for id in pessoa:
   #separa as respostas de cada pessoa em uma lista e adiciona lista em uma matriz, de forma que, linha=pessoa, coluna=questão
@@ -27,7 +27,7 @@ for id in pessoa:
     
     if i not in norm2 and i>5:
         item = item.replace("sim, algumas vezes", '4').replace('sempre', "4").replace('frequentemente', "3").replace('às vezes', "2").replace('raramente', "1").replace('nunca', "0").replace('na maior parte', "4").replace('em grande parte', "3").replace('um pouco', "2").replace('em uma pequena parte',"1").replace('muito pouco', "0").replace('muito satisfeito',"4").replace('nem/nem', '2').replace('muito insatisfeito',"0").replace('insatisfeito', "1").replace('satisfeito',"3")
-        item= item.replace('não encaixa', "0").replace("sim, diariamente", "4").replace("sim, semanalmente","3").replace("sim, mensalmente","2") 
+        item= item.replace('não encaixa', "0").replace("sim, diariamente", "4").replace("sim, semanalmente","3").replace("sim, mensalmente","2").replace("uma pequena parte",'1').replace("grande parte",'3').replace("parte",'2').replace("em nenhum momento",'0')        
         respostas[i] = item
     
     if i in norm2:
@@ -44,7 +44,8 @@ for id in pessoa:
                               '2').replace('muito insatisfeito', "4").replace(
                                   'insatisfeito',
                                   "3").replace('satisfeito', "1").replace(
-                                      'eu não tenho um supervisor', '4')
+                                      'eu não tenho um supervisor', '4').replace("encaixa perfeitamente",'0').replace("encaixa muito bem",'1').replace("encaixa um pouquinho",'2').replace("não encaixa",'3')
+
         respostas[i] = item
     Mdados.append(respostas)
 

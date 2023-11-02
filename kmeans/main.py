@@ -21,7 +21,7 @@ norm2 = [
 ]
 for id in pessoa:
   #separa as respostas de cada pessoa em uma lista e adiciona lista em uma matriz, de forma que, linha=pessoa, coluna=questão
-  respostas = id.lower().replace(' do tempo', '').replace("sim,","sim").replace(",,",",-,").split(',')
+  respostas = id.lower().replace(' do tempo', '').replace("sim,","sim").replace(",,",",0,").replace('-','').split(',')
   for item in respostas:
     i = respostas.index(item)
     
@@ -30,22 +30,9 @@ for id in pessoa:
         item= item.replace('não encaixa', "0").replace("sim, diariamente", "4").replace("sim, semanalmente","3").replace("sim, mensalmente","2").replace("uma pequena parte",'1').replace("grande parte",'3').replace("parte",'2').replace("em nenhum momento",'0')        
         respostas[i] = item
     
-    if i in norm2:
-        item = item.replace('sempre', "0").replace(
-          'frequentemente',
-          "1").replace('às vezes', "2").replace('raramente', "3").replace(
-              'nunca', "4").replace('na maior parte', "0").replace(
-                  'em grande parte', "1").replace('um pouco', "2").replace(
-                      'em uma pequena parte',
-                      "3").replace('muito pouco', "4").replace(
-                          'eu não tenho colegas',
-                          "0").replace('muito satisfeito', "0").replace(
-                              'nem/nem',
-                              '2').replace('muito insatisfeito', "4").replace(
-                                  'insatisfeito',
-                                  "3").replace('satisfeito', "1").replace(
-                                      'eu não tenho um supervisor', '4').replace("encaixa perfeitamente",'0').replace("encaixa muito bem",'1').replace("encaixa um pouquinho",'2').replace("não encaixa",'3')
-
+    if i in norm2 or i<=5:
+        item = item.replace('sempre', "0").replace('frequentemente',"1").replace('às vezes', "2").replace('raramente', "3").replace('nunca', "4").replace('na maior parte', "0").replace('em grande parte', "1").replace('um pouco', "2").replace('em uma pequena parte',"3").replace('muito pouco', "4").replace('eu não tenho colegas',"0").replace('muito satisfeito', "0").replace('nem/nem','2').replace('muito insatisfeito', "4").replace('insatisfeito',"3").replace('satisfeito', "1").replace('eu não tenho um supervisor', '4').replace("encaixa perfeitamente",'0').replace("encaixa muito bem",'1').replace("encaixa um pouquinho",'2').replace("não encaixa",'3').replace('diurno','0').replace('noturno','1')
+        item = item.replace('1618 anos','0').replace('1925 anos','1').replace('2630 anos','2').replace('3135 anos','3').replace('3640 anos','4').replace('1° ciclo','1').replace('2° ciclo','2').replace('3° ciclo','3').replace('4° ciclo','4').replace('5° ciclo','5').replace('6° ciclo','6').replace('7° ciclo','7').replace('8° ciclo','8')
         respostas[i] = item
     Mdados.append(respostas)
 
@@ -54,10 +41,10 @@ Dnorm = []
 for linha in Mdados:
     holder = []
     mult = []
-    holder.append(linha[0])  #id
-    holder.append(linha[1])  #idade
+    holder.append(int(linha[0]))  #id
+    holder.append(int(linha[1]))  #idade
     holder.append(linha[3])  #genero
-    holder.append(linha[4])  #periodo
+    holder.append(int(linha[4]))  #periodo
     holder.append(linha[5])  #ciclo
     holder.append(int(linha[6]) + int(linha[7]) + int(linha[8]) +
                     int(linha[9]))  #demandas quantitativas
@@ -135,24 +122,70 @@ for linha in Mdados:
     holder.append(int(linha[138]) + int(linha[139]) + int(linha[140]) +int(linha[141]))  #estado mental
     holder.append(int(linha[142]) + int(linha[143]) + int(linha[144]) +int(linha[145])+ int(linha[146]) +int(linha[147]))  #descrições
     Dnorm.append(holder)
-
-from sklearn.cluster import KMeans
 import numpy as np
+import matplotlib.pyplot as plt
+import seaborn as sns
+from sklearn.cluster import KMeans
 
-kmeans = KMeans(n_clusters=2, random_state=0).fit(Dnorm)
-#you can see the labels with:
-print(kmeans.labels_)
+# Suponha que Dnorm seja a sua matriz de dados com várias colunas
+# Dnorm = [[x1, y1, z1, ...], [x2, y2, z2, ...], ...]
 
-# the output will be something like:
-#array([0, 0, 0, 1, 1, 1], dtype=int32)
-# the values (0,1) tell you to what cluster does every of your data points correspond to
+# Converter Dnorm em uma matriz numpy
+Dnorm = np.array(Dnorm)
 
-#array([0, 1], dtype=int32)
-#or see were the centres of your clusters are
-kmeans.cluster_centers_
+# Selecionar as colunas que você deseja usar (por exemplo, coluna 1 e coluna 3)
+selected_columns = Dnorm[:, [1, 10]]  # Substitua 0 e 2 pelos índices das colunas desejadas
 
-#home_data = pd.read_csv(Mdados, usecols = ['Id', 'Termo', 'median_house_value'])
-#home_data.head()
-#scikit-learn em conjunto o matplotlib
-print(Dnorm)
-file.close()
+# Definir o número de clusters que você deseja
+n_clusters = 3  # Substitua 3 pelo número desejado de clusters
+
+# Criar e ajustar o modelo K-Means às colunas selecionadas
+kmeans = KMeans(n_clusters=n_clusters)
+kmeans.fit(selected_columns)
+
+# Obter os rótulos dos clusters para cada ponto de dados
+labels = kmeans.labels_
+
+# Obter os centroides dos clusters
+centroids = kmeans.cluster_centers_
+
+# Definir uma paleta de cores personalizada com base no número de clusters
+colors = sns.color_palette("hsv", n_clusters)  # Use "hsv" ou outra paleta de cores de sua escolha
+
+# Converter os rótulos dos clusters em inteiros
+labels = labels.astype(int)
+
+# Crie um DataFrame com os dados
+import pandas as pd
+data = pd.DataFrame({'Coluna 1': selected_columns[:, 0], 'Coluna 3': selected_columns[:, 1], 'Cluster': labels})
+
+# Calcular a contagem de valores separadamente para cada cluster
+count_by_cluster = data.groupby(['Cluster', 'Coluna 1']).size().reset_index(name='Contagem')
+
+# Criar a primeira figura com o gráfico de dispersão
+plt.figure(figsize=(12, 6))
+plt.subplot(121)
+
+# Atribuir cores aos pontos com base nos rótulos dos clusters
+for cluster in range(n_clusters):
+    plt.scatter(selected_columns[labels == cluster, 0], selected_columns[labels == cluster, 1], c=colors[cluster], label=f'Cluster {cluster}', alpha=0.5)
+
+plt.scatter(centroids[:, 0], centroids[:, 1], c='black', marker='x', s=100)
+plt.xlabel("Coluna 1")
+plt.ylabel("Coluna 3")
+plt.title("Gráfico de Dispersão")
+plt.legend()
+
+# Criar a segunda figura com o gráfico de contagem (countplot)
+plt.subplot(122)
+sns.barplot(data=count_by_cluster, x='Coluna 1', y='Contagem', hue='Cluster', palette=colors)
+plt.xlabel("Coluna 1")
+plt.ylabel("Contagem")
+plt.legend(title="Cluster", loc='upper right')
+plt.title("Gráfico de Contagem")
+
+# Ajustar a disposição das subtramas
+plt.tight_layout()
+
+# Mostrar as figuras
+plt.show()

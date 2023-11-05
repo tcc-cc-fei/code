@@ -124,68 +124,97 @@ for linha in Mdados:
     Dnorm.append(holder)
 import numpy as np
 import matplotlib.pyplot as plt
-import seaborn as sns
 from sklearn.cluster import KMeans
+from sklearn.preprocessing import MinMaxScaler
+from collections import Counter
 
 # Suponha que Dnorm seja a sua matriz de dados com várias colunas
-# Dnorm = [[x1, y1, z1, ...], [x2, y2, z2, ...], ...]
+# Dnorm = [[id1, x1, y1, z1, ...], [id2, x2, y2, z2, ...], ...]
 
 # Converter Dnorm em uma matriz numpy
 Dnorm = np.array(Dnorm)
 
-# Selecionar as colunas que você deseja usar (por exemplo, coluna 1 e coluna 3)
-selected_columns = Dnorm[:, [1, 10]]  # Substitua 0 e 2 pelos índices das colunas desejadas
+# Defina o índice da coluna de ID
+coluna_id = 0  # Índice da coluna de ID
+coluna_x = 1   # Índice da primeira coluna de coordenada
+coluna_y = 10  # Índice da segunda coluna de coordenada
 
 # Definir o número de clusters que você deseja
 n_clusters = 3  # Substitua 3 pelo número desejado de clusters
 
-# Criar e ajustar o modelo K-Means às colunas selecionadas
-kmeans = KMeans(n_clusters=n_clusters)
+# Selecionar as colunas de coordenadas com base nos índices definidos
+selected_columns = Dnorm[:, [coluna_x, coluna_y]]
+
+# Aplicar normalização Min-Max para escalar os valores
+scaler = MinMaxScaler()
+selected_columns = scaler.fit_transform(selected_columns)
+
+# Criar e ajustar o modelo K-Means às colunas normalizadas
+kmeans = KMeans(n_clusters=n_clusters, n_init=1)  # Defina n_init explicitamente
 kmeans.fit(selected_columns)
 
 # Obter os rótulos dos clusters para cada ponto de dados
 labels = kmeans.labels_
 
-# Obter os centroides dos clusters
-centroids = kmeans.cluster_centers_
+# Obter as coordenadas das centroides normalizadas
+centroids_normalized = kmeans.cluster_centers_
 
-# Definir uma paleta de cores personalizada com base no número de clusters
-colors = sns.color_palette("hsv", n_clusters)  # Use "hsv" ou outra paleta de cores de sua escolha
+# Aplicar inversão da normalização apenas às coordenadas das centroides
+centroids = scaler.inverse_transform(centroids_normalized)
 
-# Converter os rótulos dos clusters em inteiros
-labels = labels.astype(int)
+# Definir cores personalizadas para cada cluster
+cluster_colors = ['red', 'blue', 'green']  # Adicione mais cores conforme necessário
 
-# Crie um DataFrame com os dados
-import pandas as pd
-data = pd.DataFrame({'Coluna 1': selected_columns[:, 0], 'Coluna 3': selected_columns[:, 1], 'Cluster': labels})
+# Criar um mapeamento de ID para rótulos de cluster
+id_to_cluster = {int(id_value): label for id_value, label in zip(Dnorm[:, coluna_id], labels)}
 
-# Calcular a contagem de valores separadamente para cada cluster
-count_by_cluster = data.groupby(['Cluster', 'Coluna 1']).size().reset_index(name='Contagem')
+# Contar os pontos em cada cluster com base no mapeamento de ID
+cluster_counts = dict(Counter(id_to_cluster.values()))
 
-# Criar a primeira figura com o gráfico de dispersão
+# Criar o gráfico de dispersão
 plt.figure(figsize=(12, 6))
-plt.subplot(121)
 
-# Atribuir cores aos pontos com base nos rótulos dos clusters
+# Plotar o gráfico de dispersão
+plt.subplot(1, 2, 1)
+data_original = scaler.inverse_transform(selected_columns)
 for cluster in range(n_clusters):
-    plt.scatter(selected_columns[labels == cluster, 0], selected_columns[labels == cluster, 1], c=colors[cluster], label=f'Cluster {cluster}', alpha=0.5)
+    plt.scatter(data_original[labels == cluster, 0], data_original[labels == cluster, 1], c=cluster_colors[cluster], label=f'Cluster {cluster}', alpha=0.5)
+
+for i, (x, y) in enumerate(centroids):
+    plt.text(x, y, f'Centroide {i} ({x:.2f}, {y:.2f})', fontsize=10, ha='center', va='bottom')
+
 
 plt.scatter(centroids[:, 0], centroids[:, 1], c='black', marker='x', s=100)
-plt.xlabel("Coluna 1")
-plt.ylabel("Coluna 3")
+
+plt.xlabel("Coluna X")
+plt.ylabel("Coluna Y")
 plt.title("Gráfico de Dispersão")
 plt.legend()
 
-# Criar a segunda figura com o gráfico de contagem (countplot)
-plt.subplot(122)
-sns.barplot(data=count_by_cluster, x='Coluna 1', y='Contagem', hue='Cluster', palette=colors)
-plt.xlabel("Coluna 1")
-plt.ylabel("Contagem")
-plt.legend(title="Cluster", loc='upper right')
-plt.title("Gráfico de Contagem")
+# Plotar o gráfico de barras
+plt.subplot(1, 2, 2)
+bars = plt.bar(cluster_counts.keys(), cluster_counts.values(), color=cluster_colors)
+plt.xticks(list(cluster_counts.keys()))
+plt.xlabel("Cluster")
+plt.ylabel("Quantidade de Pontos")
+plt.title("Gráfico de Barras")
 
-# Ajustar a disposição das subtramas
+# Adicionar rótulos acima das barras
+for bar in bars:
+    height = bar.get_height()
+    plt.annotate(f'{height}', xy=(bar.get_x() + bar.get_width() / 2, height), xytext=(0, 3),
+                 textcoords="offset points", ha='center', va='bottom')
+
+# Ajustar a exibição para que os gráficos não se sobreponham
 plt.tight_layout()
 
-# Mostrar as figuras
+# Mostrar os gráficos
 plt.show()
+
+# Opcional: Mostrar as coordenadas dos pontos
+idx=-1
+for id_value, (x, y) in zip(Dnorm[:, coluna_id], data_original):
+    if (int(id_value)!=idx):
+        print(f'ID: {int(id_value)}, Coordenada: ({x:.2f}, {y:.2f})')
+        idx=int(id_value)
+

@@ -128,16 +128,13 @@ from sklearn.cluster import KMeans
 from sklearn.preprocessing import MinMaxScaler
 from collections import Counter
 
-# Suponha que Dnorm seja a sua matriz de dados com várias colunas
-# Dnorm = [[id1, x1, y1, z1, ...], [id2, x2, y2, z2, ...], ...]
-
 # Converter Dnorm em uma matriz numpy
 Dnorm = np.array(Dnorm)
 
 # Defina o índice da coluna de ID
 coluna_id = 0  # Índice da coluna de ID
-coluna_x = 1   # Índice da primeira coluna de coordenada
-coluna_y = 10  # Índice da segunda coluna de coordenada
+coluna_x = 2   # Índice da primeira coluna de coordenada
+coluna_y = 6 # Índice da segunda coluna de coordenada
 
 # Definir o número de clusters que você deseja
 n_clusters = 3  # Substitua 3 pelo número desejado de clusters
@@ -149,18 +146,30 @@ selected_columns = Dnorm[:, [coluna_x, coluna_y]]
 scaler = MinMaxScaler()
 selected_columns = scaler.fit_transform(selected_columns)
 
-# Criar e ajustar o modelo K-Means às colunas normalizadas
-kmeans = KMeans(n_clusters=n_clusters, n_init=1)  # Defina n_init explicitamente
-kmeans.fit(selected_columns)
+best_kmeans = None
+best_score = float("inf")  # Inicialize com um valor alto
+
+# Executar o K-Means várias vezes com diferentes inicializações
+for _ in range(20):  # Escolha o número de tentativas que desejar
+    kmeans = KMeans(n_clusters=n_clusters, n_init=1)  # Uma tentativa com inicialização aleatória
+    kmeans.fit(selected_columns)
+
+    # Avaliar a qualidade do agrupamento (use a métrica que preferir)
+    score = kmeans.inertia_  # Inércia, quanto menor, melhor
+
+    if score < best_score:
+        best_score = score
+        best_kmeans = kmeans
 
 # Obter os rótulos dos clusters para cada ponto de dados
-labels = kmeans.labels_
+labels = best_kmeans.labels_
 
 # Obter as coordenadas das centroides normalizadas
-centroids_normalized = kmeans.cluster_centers_
+centroids_normalized = best_kmeans.cluster_centers_
 
 # Aplicar inversão da normalização apenas às coordenadas das centroides
 centroids = scaler.inverse_transform(centroids_normalized)
+
 
 # Definir cores personalizadas para cada cluster
 cluster_colors = ['red', 'blue', 'green']  # Adicione mais cores conforme necessário
@@ -211,10 +220,11 @@ plt.tight_layout()
 # Mostrar os gráficos
 plt.show()
 
-# Opcional: Mostrar as coordenadas dos pontos
-idx=-1
-for id_value, (x, y) in zip(Dnorm[:, coluna_id], data_original):
-    if (int(id_value)!=idx):
-        print(f'ID: {int(id_value)}, Coordenada: ({x:.2f}, {y:.2f})')
-        idx=int(id_value)
-
+# Abrir um arquivo de texto para escrita
+with open('coordenadas.txt', 'w') as arquivo:
+    idx = -1
+    for id_value, (x, y) in zip(Dnorm[:, coluna_id], data_original):
+        if (int(id_value) != idx):
+            cluster = id_to_cluster.get(int(id_value), 'Não atribuído a nenhum cluster')
+            arquivo.write(f'ID: {int(id_value)}, Coordenada: ({x:.2f}, {y:.2f}), Cluster: {cluster}\n')
+            idx = int(id_value)

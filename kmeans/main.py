@@ -45,7 +45,7 @@ for linha in Mdados:
     mult = []
     holder.append(int(linha[0]))  #id
     holder.append(int(linha[7]))  #idade
-    holder.append(int(linha[8]) ) #genero
+    holder.append(int(linha[8])) #genero
     holder.append(int(linha[9]))  # período
     holder.append(linha[10])  # ciclo
     holder.append(int(linha[12]) + int(linha[13]) + int(linha[14]) +
@@ -61,8 +61,7 @@ for linha in Mdados:
         int(linha[26]) + int(linha[27]) + int(linha[28]) +
         int(linha[29]))  # exigencia de esconder emocoes
     holder.append(
-        int(linha[30]) + int(linha[31]) + int(linha[32]) + int(linha[33]) +
-        int(linha[34]))  # influencia na faculdade
+        int(linha[30]) + int(linha[31]) + int(linha[32]) + int(linha[33])+int(linha[34]))  # influencia na faculdade
     holder.append(int(linha[35]) + int(linha[36]) +
                     int(linha[37]))  # possibilidade de desenvolvimento
     holder.append(int(linha[38]) + int(linha[39]))  # variação de trabalhos
@@ -76,6 +75,7 @@ for linha in Mdados:
                     int(linha[54]))  # clareza do curso
     holder.append(int(linha[55]) + int(linha[56]))  # conflitos de função
     holder.append(int(linha[57]))  # tarefas ilegítimas
+
     holder.append(
         int(linha[58]) + int(linha[59]) + int(linha[60]) +
         int(linha[61]))  # qualidade de liderança
@@ -97,86 +97,41 @@ for linha in Mdados:
     holder.append(int(linha[85]) + int(linha[86]))  # qualidade dos trabalhos
     holder.append(
         int(linha[87]) + int(linha[88]) + int(linha[89]) +
-        int(linha[90]))  # satisfação na faculdade
+        int(linha[90])+int(linha[91]))  # satisfação na faculdade
+    holder.append(int(linha[92]) + int(linha[93]) + int(linha[94]) +
+        int(linha[95]))  # conflito de vida universitária
+    holder.append(int(linha[96]) + int(linha[97]) +
+                    int(linha[98]))  # confiança horizontal
     holder.append(
-        int(linha[91]) + int(linha[92]) + int(linha[93]) + int(linha[94]) +
-        int(linha[95]) + int(linha[96]))  # conflito de vida universitária
-    holder.append(int(linha[97]) + int(linha[98]) +
-                    int(linha[99]))  # confiança horizontal
-    holder.append(
-        int(linha[100]) + int(linha[101]) + int(linha[102]) +
-        int(linha[103]))  # confiança vertical
-
-Dnorm = []
-
-for linha in Mdados:
-    holder = []
-    mult = []
-    holder.append(int(linha[0]))  #id
-    holder.append(int(linha[7]))  #idade
-    holder.append(linha[8])  #genero
-    holder.append(int(linha[9]))  # período
-    holder.append(linha[10])  # ciclo
-    holder.append(int(linha[12]) + int(linha[13]) + int(linha[14]) +
-                int(linha[15]))  # demandas quantitativas
-    holder.append(int(linha[16]) + int(linha[17]) +
-                    int(linha[18]))  # ritmos de tarefas
-    holder.append(
-        int(linha[19]) + int(linha[20]) + int(linha[21]) +
-        int(linha[22]))  # demandas cognitivas
-    holder.append(int(linha[23]) + int(linha[24]) +
-                    int(linha[25]))  # exigencias emocionais
-    holder.append(
-        int(linha[26]) + int(linha[27]) + int(linha[28]) +
-        int(linha[29]))  # exigencia de esconder emocoes
-    holder.append(
-        int(linha[30]) + int(linha[31]) + int(linha[32]) + int(linha[33]) +
-        int(linha[34]))  # influencia na faculdade
-    holder.append(int(linha[35]) + int(linha[36]) +
-                    int(linha[37]))  # possibilidade de desenvolvimento
-    holder.append(int(linha[38]) + int(linha[39]))  # variação de trabalhos
-    holder.append(int(linha[40]) + int(linha[41]) +
-                    int(linha[42])+int(linha[43]))  # controle sobre tempo de trabalho
-    holder.append(int(linha[44]) + int(linha[45]))  # Significado do curso
-    holder.append(int(linha[47]) + int(linha[48]))  # Previbilisidade
-    holder.append(int(linha[49]) + int(linha[50]) +
-                    int(linha[51]))  # Reconhecimento
-    holder.append(int(linha[52]) + int(linha[53]) +
-                    int(linha[54]))  # clareza do curso
-    holder.append(int(linha[55]) + int(linha[56]))  # conflitos de função
-    holder.append(int(linha[57]))  # tarefas ilegítimas
-    holder.append(
-        int(linha[58]) + int(linha[59]) + int(linha[60]) +
-        int(linha[61]))  # qualidade de liderança
-    holder.append(int(linha[62]) + int(linha[63]) +
-                    int(linha[64]))  # apoio social dos professores
-    holder.append(int(linha[65]) + int(linha[66]) +
-                    int(linha[67]))  # apoio social dos colegas
-    holder.append(int(linha[68]) + int(linha[69]) +
-                    int(linha[70]))  # senso de comunidade no trabalho
-    holder.append(
-        int(linha[71]) + int(linha[72]) + int(linha[73]) + int(linha[74]) +
-        int(linha[75]))  # compromisso com a faculdade
-    holder.append(int(linha[76]) + int(linha[77]) +
-                    int(linha[78]))  # engajamento na faculdade
-    holder.append(int(linha[79]) + int(linha[80]))  # insegurança na faculdade
-    holder.append(
-        int(linha[81]) + int(linha[82]) + int(linha[83]) +
-        int(linha[84]))  # insegurança na situação de estudo
-    holder.append(int(linha[85]) + int(linha[86]))  # qualidade dos trabalhos
-    holder.append(
-        int(linha[87]) + int(linha[88]) + int(linha[89]) +
-        int(linha[90]))  # satisfação na faculdade
-    holder.append(
-        int(linha[91]) + int(linha[92]) + int(linha[93]) + int(linha[94]) +
-        int(linha[95]) + int(linha[96]))  # conflito de vida universitária
-    holder.append(int(linha[97]) + int(linha[98]) +
-                    int(linha[99]))  # confiança horizontal
-    holder.append(
-        int(linha[100]) + int(linha[101]) + int(linha[102]) +
-        int(linha[103]))  # confiança vertical
+        int(linha[99]) + int(linha[100]) + int(linha[101]) +
+        int(linha[102]))  # confiança vertical
+    holder.append(int(linha[103]) + int(linha[104]) + int(linha[105])+int(linha[106]))  #justiça organizacional
+    
+    holder.append(linha[107] + ' ' + linha[108])  # fofocas e calúnias
+    holder.append(linha[109])  # conflitos e brigas
+    holder.append(linha[110] + ' ' + linha[111])  # provocação desagradável
+    holder.append(linha[112] + ' ' + linha[113])  # cyberbullying
+    holder.append(linha[114] + ' ' + linha[115])  # assédio
+    holder.append(linha[116] + ' ' + linha[117])  # ameca de violencia
+    holder.append(linha[118] + ' ' + linha[119])  # violencia
+    holder.append(linha[120] + ' ' + linha[121] +
+                    '; com problemas de assédio moral? ' + linha[122])  # assédio moral
+    holder.append(int(linha[124]))  # saude
+    holder.append(int(linha[125]) + int(linha[126]) + int(linha[127]) +
+                    int(linha[128]))  # sono
+    holder.append(int(linha[129]) + int(linha[130]) + int(linha[131]) +
+                    int(linha[132]))  # saúde mental
+    holder.append(int(linha[133]) + int(linha[134]) +
+                    int(linha[135]))  # relaxamento
+    holder.append(int(linha[136]) + int(linha[137]) + int(linha[138]) +
+                    int(linha[139]))  # dores
+    holder.append(int(linha[140]) + int(linha[141]) + int(linha[142]) +
+                    int(linha[143]))  # clareza mental
+    holder.append(int(linha[144]) + int(linha[145]) + int(linha[146]) +
+                    int(linha[147]) )  # estado mental
+    holder.append(int(linha[148]) + int(linha[149]) + int(linha[150]) +
+                    int(linha[151]) + int(linha[152]) + int(linha[153]))  # descrições
     Dnorm.append(holder)
-
 
 import numpy as np
 import matplotlib.pyplot as plt
@@ -189,8 +144,8 @@ Dnorm = np.array(Dnorm)
 
 # Defina o índice da coluna de ID
 coluna_id = 0  # Índice da coluna de ID
-coluna_x = 6   # Índice da primeira coluna de coordenada
-coluna_y = 2 # Índice da segunda coluna de coordenada
+coluna_x = 2   # Índice da primeira coluna de coordenada
+coluna_y = 6 # Índice da segunda coluna de coordenada
 
 # Definir o número de clusters que você deseja
 n_clusters = 3  # Substitua 3 pelo número desejado de clusters

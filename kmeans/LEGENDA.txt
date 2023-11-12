@@ -1,51 +1,50 @@
-0  ID
-
-2  IDADE
-3  GENERO
-4  PERIODO
-5  CICLO
-
-6  DEMANDAS QUANTITATIVAS
-7  RITMOS DE TAREFAS
-8  DEMANDAS COGNITIVAS
-9  EXIGENCIAS EMOCIONAIS
-10 EXIGENCIA DE ESCONDER EMOÇÕES
-11 INFL. NA FACULDADE
-12 POSS. DE DESENVOLVIMENTO
-13 VARIACÃO DE TRABALHOS
-14 CONTROLE SOBRE TEMPO DE TRABALHO
-15 SIGNIFICADO DO CURSO
-16 PREVISIBILIDADE
-17 RECONHECIMENTO
-18 CLAREZA DO CURSO
-19 CONFLITOS DE FUNÇÃO
-20 TAREFAS ILEGITMAS
-21 QUALIDADE DE LIDERANÇA
-22 APOIO SOCIAL DOS PROFESSORES
-23 APOIO SOCIAL DOS COLEGAS
-24 SENSO DE COMUNIDADE NO TRABALHO
-25 COMPROMISSO COM FACULDADE
-26 ENGAJAMENTO NA FACULDADE
-27 INSEGURANÇA NA FACULDADE
-28 INSEGURANÇA NA SITUAÇÃO DE ESTUDO
-29 QUALIDADE DOS TRABALHOS
-30 SATISFAÇÃO NA FACULDADE
-31 CONFLITO DE VIDA UNIVERSITÁRIA
-32 CONFIANÇA HORIZANTAL
-33 CONFIANÇA VERTICAL
-34 FOFOCAS E CALUNIAS
-35 CONFLITOS E BRIGAS
-36 PROVOCAÇÃO DESAGRADAVEL
-37 CIBERBULLYNG
-38 ASSEDIO
-39 AMEAÇA DE VIOLENCIA
-40 VIOLENCIA FISSICA
-41 ASSDIO MORAL
-42 SAUDE
-43 SONO
-44 SAUDE MENTAL
-45 RELAXAMENTO
-46 DORES
-47 CLARIDADE MENTAL
-48 ESTADO MENTAL
-49 DESCRIÇÕES
+0 - id
+1 - idade
+2 - genero
+3 - período
+4 - ciclo
+5 - demandas quantitativas
+6 - ritmos de tarefas
+7 - demandas cognitivas
+8 - exigencias emocionais
+9 - exigencia de esconder emocoes
+10 - influencia na faculdade
+11 - possibilidade de desenvolvimento
+12 - variação de trabalhos
+13 - controle sobre tempo de trabalho
+14 - Significado do curso
+15 - Previbilisidade
+16 - Reconhecimento
+17 - clareza do curso
+18 - conflitos de função
+19 - tarefas ilegítimas
+20 - qualidade de liderança
+21 - apoio social dos professores
+22 - apoio social dos colegas
+23 - senso de comunidade no trabalho
+24 - compromisso com a faculdade
+25 - engajamento na faculdade
+26 - insegurança na faculdade
+27 - insegurança na situação de estudo
+28 - qualidade dos trabalhos
+29 - satisfação na faculdade
+30 - conflito de vida universitária
+31 - confiança horizontal
+32 - confiança vertical
+33 - justiça organizacional
+34 - fofocas e calúnias
+35 - conflitos e brigas
+36 - provocação desagradável
+37 - cyberbullying
+38 - assédio
+39 - ameaça de violencia
+40 - violencia
+41 - assédio moral
+42 - saude
+43 - sono
+44 - saúde mental
+45 - relaxamento
+46 - dores
+47 - clareza mental
+48 - estado mental
+49 - descrições

@@ -1,8 +1,10 @@
 0 - id
+
 1 - idade
 2 - genero
 3 - período
 4 - ciclo
+
 5 - demandas quantitativas
 6 - ritmos de tarefas
 7 - demandas cognitivas

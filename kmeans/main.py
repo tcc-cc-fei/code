@@ -144,7 +144,7 @@ Dnorm = np.array(Dnorm)
 
 # Defina o índice da coluna de ID
 coluna_id = 0  # Índice da coluna de ID
-coluna_x = 15   # Índice da primeira coluna de coordenada
+coluna_x = 20   # Índice da primeira coluna de coordenada
 coluna_y = 4  # Índice da segunda coluna de coordenada
 
 # Definir o número de clusters que você deseja

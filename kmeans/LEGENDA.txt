@@ -16,6 +16,7 @@
 13 - controle sobre tempo de trabalho
 14 - Significado do curso
 15 - Previbilisidade
+
 16 - Reconhecimento
 17 - clareza do curso
 18 - conflitos de função
@@ -31,9 +32,12 @@
 28 - qualidade dos trabalhos
 29 - satisfação na faculdade
 30 - conflito de vida universitária
+
+
 31 - confiança horizontal
 32 - confiança vertical
 33 - justiça organizacional
+
 34 - fofocas e calúnias
 35 - conflitos e brigas
 36 - provocação desagradável

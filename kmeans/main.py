@@ -139,18 +139,16 @@ from sklearn.cluster import KMeans
 from sklearn.preprocessing import MinMaxScaler
 from collections import Counter
 
-# Converter Dnorm em uma matriz numpy
 Dnorm = np.array(Dnorm)
 
-# Defina o índice da coluna de ID
-coluna_id = 0  # Índice da coluna de ID
-coluna_x = 30   # Índice da primeira coluna de coordenada
-coluna_y = 4 # Índice da segunda coluna de coordenada
+coluna_id = 0  # Índice ID
+coluna_x = 49  
+coluna_y = 4 
 
-# Definir o número de clusters que você deseja
-n_clusters = 3  # Substitua 3 pelo número desejado de clusters
+# Número de clusters
+n_clusters = 3
 
-# Selecionar as colunas de coordenadas com base nos índices definidos
+# Selecionar as colunas de coordenadas
 selected_columns = Dnorm[:, [coluna_x, coluna_y]]
 
 # Aplicar normalização Min-Max para escalar os valores
@@ -158,14 +156,14 @@ scaler = MinMaxScaler()
 selected_columns = scaler.fit_transform(selected_columns)
 
 best_kmeans = None
-best_score = float("inf")  # Inicialize com um valor alto
+best_score = float("inf") 
 
 # Executar o K-Means várias vezes com diferentes inicializações
 for _ in range(20):  # Escolha o número de tentativas que desejar
     kmeans = KMeans(n_clusters=n_clusters, n_init=1)  # Uma tentativa com inicialização aleatória
     kmeans.fit(selected_columns)
 
-    # Avaliar a qualidade do agrupamento (use a métrica que preferir)
+    # Avaliar a qualidade do agrupamento
     score = kmeans.inertia_  # Inércia, quanto menor, melhor
 
     if score < best_score:
@@ -183,7 +181,7 @@ centroids = scaler.inverse_transform(centroids_normalized)
 
 
 # Definir cores personalizadas para cada cluster
-cluster_colors = ['red', 'blue', 'green']  # Adicione mais cores conforme necessário
+cluster_colors = ['red', 'blue', 'green'] 
 
 # Criar um mapeamento de ID para rótulos de cluster
 id_to_cluster = {int(id_value): label for id_value, label in zip(Dnorm[:, coluna_id], labels)}

@@ -138,12 +138,13 @@ import matplotlib.pyplot as plt
 from sklearn.cluster import KMeans
 from sklearn.preprocessing import MinMaxScaler
 from collections import Counter
+from sklearn import metrics
 
 Dnorm = np.array(Dnorm)
 
 coluna_id = 0  # Índice ID
-coluna_x = 49  
-coluna_y = 4 
+coluna_x = 32
+coluna_y = 4
 
 # Número de clusters
 n_clusters = 3
@@ -156,10 +157,11 @@ scaler = MinMaxScaler()
 selected_columns = scaler.fit_transform(selected_columns)
 
 best_kmeans = None
-best_score = float("inf") 
+best_score = float("inf")
+worst_score = float("0")
 
 # Executar o K-Means várias vezes com diferentes inicializações
-for _ in range(20):  # Escolha o número de tentativas que desejar
+for _ in range(100):  # Escolha o número de tentativas que desejar
     kmeans = KMeans(n_clusters=n_clusters, n_init=1)  # Uma tentativa com inicialização aleatória
     kmeans.fit(selected_columns)
 
@@ -169,6 +171,12 @@ for _ in range(20):  # Escolha o número de tentativas que desejar
     if score < best_score:
         best_score = score
         best_kmeans = kmeans
+    
+    if score>worst_score:
+        worst_score = score
+
+silhueta= metrics.silhouette_score(selected_columns, kmeans.labels_)
+
 
 # Obter os rótulos dos clusters para cada ponto de dados
 labels = best_kmeans.labels_
@@ -192,11 +200,14 @@ cluster_counts = dict(Counter(id_to_cluster.values()))
 # Criar o gráfico de dispersão
 plt.figure(figsize=(12, 6))
 
-# Plotar o gráfico de dispersão
+# Criar um mapeamento consistente de cores com base nos rótulos dos clusters
+cluster_colors_scatter = [cluster_colors[label] for label in labels]
+
 plt.subplot(1, 2, 1)
 data_original = scaler.inverse_transform(selected_columns)
 for cluster in range(n_clusters):
-    plt.scatter(data_original[labels == cluster, 0], data_original[labels == cluster, 1], c=cluster_colors[cluster], label=f'Cluster {cluster}', alpha=0.5)
+    plt.scatter(data_original[labels == cluster, 0], data_original[labels == cluster, 1],
+                c=cluster_colors[cluster], label=f'Cluster {cluster}', alpha=0.5)
 
 for i, (x, y) in enumerate(centroids):
     plt.text(x, y, f'Centroide {i} ({x:.2f}, {y:.2f})', fontsize=10, ha='center', va='bottom')
@@ -204,15 +215,14 @@ for i, (x, y) in enumerate(centroids):
 
 plt.scatter(centroids[:, 0], centroids[:, 1], c='black', marker='x', s=100)
 
-plt.xlabel("Coluna X")
-plt.ylabel("Coluna Y")
+plt.xlabel("X confiança vertical")
+plt.ylabel("Y ciclo")
 plt.title("Gráfico de Dispersão")
 plt.legend()
 
 # Plotar o gráfico de barras
 plt.subplot(1, 2, 2)
-bars = plt.bar(cluster_counts.keys(), cluster_counts.values(), color=cluster_colors)
-plt.xticks(list(cluster_counts.keys()))
+bars = plt.bar(range(n_clusters), cluster_counts.values(), color=cluster_colors)
 plt.xlabel("Cluster")
 plt.ylabel("Quantidade de Pontos")
 plt.title("Gráfico de Barras")
@@ -232,6 +242,7 @@ plt.show()
 # Abrir um arquivo de texto para escrita
 with open('coordenadas.txt', 'w') as arquivo:
     idx = -1
+    arquivo.write(f'Inercia final: %.2f, Pior inercia: %.2f, Silhueta: %.2f \n' %(best_score,worst_score,silhueta))
     for id_value, (x, y) in zip(Dnorm[:, coluna_id], data_original):
         if (int(id_value) != idx):
             cluster = id_to_cluster.get(int(id_value), 'Não atribuído a nenhum cluster')

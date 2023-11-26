@@ -143,8 +143,8 @@ from sklearn import metrics
 Dnorm = np.array(Dnorm)
 
 coluna_id = 0  # Índice ID
-coluna_x = 25
-coluna_y = 1 #1-4
+coluna_x = 49
+coluna_y = 4 #1-4
 
 # Número de clusters
 n_clusters = 3
@@ -215,8 +215,8 @@ for i, (x, y) in enumerate(centroids):
 
 plt.scatter(centroids[:, 0], centroids[:, 1], c='black', marker='x', s=100)
 
-plt.xlabel("X engajamento na faculdade")
-plt.ylabel("Y idade")
+plt.xlabel("X descrições")
+plt.ylabel("Y ciclo")
 plt.title("Gráfico de Dispersão")
 plt.legend()
 

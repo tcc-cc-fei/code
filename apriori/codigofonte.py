@@ -149,7 +149,7 @@ df=Renumerar_Questoes(df)
 df=Definicao_Padroes(df)
 df=dropColunas(df,'ID')
 
-itens_spt_min = apriori(df, min_support=0.7, use_colnames=True)
+itens_spt_min = apriori(df, min_support=0.6, use_colnames=True)
 
 
 
@@ -161,12 +161,10 @@ plt.xticks(fontsize=5)
 plt.yticks(fontsize=5) 
 plt.show()"""
 
-rules = association_rules(itens_spt_min, metric= "confidence", min_threshold = 0)
-rules = rules.sort_values(['confidence', 'lift'], ascending =[False, False]) 
+rules = association_rules(itens_spt_min, metric= "confidence", min_threshold = 0.8)
 rules = rules.drop('zhangs_metric', axis=1)
 rules = rules.drop('leverage', axis=1)
 rules = rules.drop('conviction', axis=1)
-rules = association_rules(itens_spt_min, metric= "confidence", min_threshold = 0.8)
 rules = rules.sort_values(['confidence', 'lift'], ascending =[False, False]) 
 
 """plotarGraficos(rules,'confidence','lift','Lift por confiança')

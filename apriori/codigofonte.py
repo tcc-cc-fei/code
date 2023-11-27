@@ -167,12 +167,6 @@ rules = rules.drop('leverage', axis=1)
 rules = rules.drop('conviction', axis=1)
 rules = rules.sort_values(['confidence', 'lift'], ascending =[False, False]) 
 
-"""plotarGraficos(rules,'confidence','lift','Lift por confiança')
-plotarGraficos(rules,'antecedents','lift','Lift por antecedente')
-plotarGraficos(rules,'consequents','lift','Lift por consequente')
-plotarGraficos(rules,'antecedents','confidence','Confiança por antecedente')
-plotarGraficos(rules,'consequents','confidence','Confiança por consequente')"""
-
 lift_maior_1 = rules[rules['lift'] > 1]
 lif_menor_1=rules[rules['lift'] < 1]
 lift_igual_1=rules[rules['lift']==1]
